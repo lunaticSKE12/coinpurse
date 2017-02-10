@@ -14,9 +14,9 @@ public class Main {
     public static void main( String[] args ) {
 //TODO follow the steps in the sequence diagram
         // 1. create a Purse
-
+Coin coin = new Coin(1);
         // 2. create a ConsoleDialog with a reference to the Purse object
-
+System.out.print(coin.toString());
         // 3. run the ConsoleDialog
 
     }

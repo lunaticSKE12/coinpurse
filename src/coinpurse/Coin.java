@@ -1,11 +1,9 @@
 package coinpurse;
-//TODO fix this Javadoc. It should be written as a COMPLETE SENTENCE WITH PERIOD.
 /**
  * a coin with a monetary value and currency
- * @author
+ * @author Napong Dungduangsasitorn
  */
-//TODO declare that Coin implements Comparable<Coin>
-public class Coin {
+public class Coin implements Comparable<Coin>{
 	public static final String DEFAULT_CURRENCY = "Baht";
     /** Value of the coin. */
     private final double value;
@@ -17,7 +15,8 @@ public class Coin {
      * @param value
      */
     public Coin( double value ) {
-        
+    	this.value = value;
+        this.currency = DEFAULT_CURRENCY;
     }
     
     /**
@@ -26,26 +25,58 @@ public class Coin {
      * @param currency
      */
     public Coin( double value, String currency ) {
+    	this.value = value;
+        this.currency = currency;
  
     }
 
-//TODO Write a getValue() method and javadoc.
-    public double getValue( ) { } 
+    /**
+     * getVakue method return value of coin. 
+     * @return value of coin.
+     */
+    public double getValue( ) {
+    	return this.value;
+    } 
     
-//TODO Write a getCurrency() method and javadoc.
-    public String getCurrency() { }
-    
-//TODO Write an equals(Object) method.
-    public boolean equals(Object obj) {
-
+    /**
+     * getCurrency method return currency of coin.
+     * @return currency of coin.
+     */
+    public String getCurrency() {
+    	return this.currency;
     }
     
-//TODO Write a compareTo method and implement Comparable.
-    
-//TODO write a toString() method. See labsheet for what to return.
-    public String toString() { return ""; }
-    
-//TODO Write good Javadoc comments on all methods.
-    
+    /**
+     * equals check equals of coin and other coin object.
+     * @param obj the object that use for check equals with coin.
+     * @return return true both coin object is equals.
+     */
+    public boolean equals(Object obj) {
+    	if(obj != null)
+    		return false;
+    	if(this.getClass() == obj.getClass())
+    		return false;
+    	Coin other = (Coin) obj;
+       	return this.getValue() == other.getValue();
+    }
+
+    /**
+     * toString show info of coin.
+     * @return string that show value and currency.
+     */
+    public String toString() { return String.format(this.getValue() + " " + this.getCurrency()); }
+
+    /**
+     * compareTo is compare coin value.
+     * @param other is other coin object to compare.
+     * @return -1 if other value is null or less than this coin,
+     * 			1 if other value is more than,
+     * 			0 if both coin value is equal. 
+     */
+    @Override	
+    public int compareTo(Coin o) {
+    	if(o == null)
+    		return -1;
+    	return (int) (this.value - o.value);
+    }
 }
-//TODO remove the TODO comments after you complete them! Including this one!
