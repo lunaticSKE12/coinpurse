@@ -12,7 +12,7 @@ public class Coin implements Comparable<Coin>{
     
     /**
      * A coin with given value using the default currency.
-     * @param value
+     * @param value is value of coin.
      */
     public Coin( double value ) {
     	this.value = value;
@@ -21,8 +21,8 @@ public class Coin implements Comparable<Coin>{
     
     /**
      * A coin with given value and currency.
-     * @param value
-     * @param currency
+     * @param value is value of coin.
+     * @param currencyis cuurrency of coin.
      */
     public Coin( double value, String currency ) {
     	this.value = value;
@@ -52,19 +52,21 @@ public class Coin implements Comparable<Coin>{
      * @return return true both coin object is equals.
      */
     public boolean equals(Object obj) {
-    	if(obj != null)
+    	if(obj == null)
     		return false;
-    	if(this.getClass() == obj.getClass())
+    	if(this.getClass() != obj.getClass())
     		return false;
     	Coin other = (Coin) obj;
-       	return this.getValue() == other.getValue();
+       	if(this.getValue() == other.getValue() && this.currency.equals(other.getCurrency()))
+       		return true;
+    	return false;
     }
 
     /**
      * toString show info of coin.
      * @return string that show value and currency.
      */
-    public String toString() { return String.format(this.getValue() + " " + this.getCurrency()); }
+    public String toString() { return String.format(this.value + " " + this.currency); }
 
     /**
      * compareTo is compare coin value.

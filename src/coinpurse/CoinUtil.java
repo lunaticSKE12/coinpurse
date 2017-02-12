@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 /**
  * Some Coin utility methods for practice using Lists and Comparator.
+ * @author Napong Dungduangsasitorn
  */
 public class CoinUtil {
 
@@ -18,8 +19,13 @@ public class CoinUtil {
 	 *     that have the requested currency.  
 	 */
 	public static List<Coin> filterByCurrency(final List<Coin> coinlist, String currency) {
-		
-		return null; // return a list of coin references copied from coinlist
+		List<Coin> coinList = new ArrayList<Coin>();
+		for(Coin coin : coinList){
+			if(coin.getCurrency().equals(currency)){
+				coinList.add(coin);
+			}
+		}
+		return coinList; // return a list of coin references copied from coinlist
 	}
 	
 
@@ -27,16 +33,9 @@ public class CoinUtil {
 	 * Method to sort a list of coins by currency.
 	 * On return, the list (coins) will be ordered by currency.
 	 * @param coins is a List of Coin objects we want to sort. 
-	 *
-	 * TODO:
-	 * 1. Write a Comparator<Coin> (you can write the class at the end of this file.
-	 *    Declare it as "class CompareByCurrency" without the "public").
-	 *    You can also write Comparator as an anonymous class, if you know how.
-	 *    The compare method should order coins by currency.
-	 * 2. Create a comparator instance and use it to sort the coins.
 	 */
 	public static void sortByCurrency(List<Coin> coins) {
-		
+		coins.sort(new CompareByCurrency());
 	}
 	
 	/**
@@ -52,6 +51,16 @@ public class CoinUtil {
 	 * Hint: this is easy if you sort the coins by currency first. :-)
 	 */
 	public static void sumByCurrency(List<Coin> coins) {
+		sortByCurrency(coins);
+		double sum = 0;
+		String currency = coins.get(0).getCurrency();
+		
+		for(Coin coin : coins){
+			if(coin.getCurrency().equals(currency)){
+				sum += coin.getValue();
+			}
+			
+		}
 
 	}
 	
@@ -110,4 +119,26 @@ public class CoinUtil {
 		}
 		System.out.println(); // end the line
 	}
+}
+
+/**
+ * class for compare two coins by currency.
+ */
+
+class CompareByCurrency implements Comparator<Coin>{
+
+	/**
+	 * compare two coins
+	 * @param arg0 is first coin.
+	 * @param aeg1 is second coin.
+	 * @return positive if arg0 more than arg1,
+	 * 		   negative if arg0 less than arg1,
+	 * 		   0 if arg0 and arg1 is equals.
+	 */
+	@Override
+	public int compare(Coin arg0, Coin arg1) {
+		
+		return arg0.getCurrency().compareTo(arg1.getCurrency());
+	}
+	
 }
