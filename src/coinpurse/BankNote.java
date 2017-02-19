@@ -1,24 +1,37 @@
 package coinpurse;
 
 /**
- * 
+ * Banknote with a monetary value and currency
+ *  
  * @author Napong Dungduangsasitorn
  *
  */
 public class BankNote implements Valuable{
 
+	
 	private static long nextSerialNumber = 1000000;
+	//value of banknote
 	private double value;
+	//currency of banknote
 	private String currency;
+	//serial number of banknote.
 	private long serialNumber;
 	
-	
+	/**
+	 * 
+	 * @param value
+	 */
 	BankNote( double value ){
 		this.value = value;
 		this.serialNumber = nextSerialNumber++;
 		
 	}
 	
+	/**
+	 * 
+	 * @param value
+	 * @param currency
+	 */
 	BankNote( double value , String currency){
 		this.value = value;
 		this.currency = currency;
@@ -26,6 +39,9 @@ public class BankNote implements Valuable{
 		
 	}
 	
+	/**
+	 * 
+	 */
 	@Override
 	public double getValue() {
 		return this.value;

@@ -5,7 +5,7 @@ import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 /**
- * Some Coin utility methods for practice using Lists and Comparator.
+ * Some Valuable utility methods for practice using Lists and Comparator.
  * @author Napong Dungduangsasitorn
  */
 public class CoinUtil {
@@ -13,19 +13,19 @@ public class CoinUtil {
 	/**
 	 * Method that examines all the coins in a List and returns
 	 * only the coins that have a currency that matches the parameter value.
-	 * @param coinlist is a List of Coin objects. This list is not modified.
+	 * @param valuablelist is a List of value objects. This list is not modified.
 	 * @param currency is the currency we want. Must not be null.
-	 * @return a new List containing only the elements from coinlist
+	 * @return a new List containing only the elements from valuablelist
 	 *     that have the requested currency.  
 	 */
-	public static List<Coin> filterByCurrency(final List<Coin> coinlist, String currency) {
-		List<Coin> coinList = new ArrayList<Coin>();
-		for(Coin coin : coinList){
-			if(coin.getCurrency().equals(currency)){
-				coinList.add(coin);
+	public static List<Valuable> filterByCurrency(final List<Valuable> valuablelist, String currency) {
+		List<Valuable> valuableList = new ArrayList<Valuable>();
+		for(Valuable value : valuablelist){
+			if(value.getCurrency().equals(currency)){
+				valuableList.add(value);
 			}
 		}
-		return coinList; // return a list of coin references copied from coinlist
+		return valuableList; // return a list of value references copied from valuablelist.
 	}
 
 
@@ -34,8 +34,8 @@ public class CoinUtil {
 	 * On return, the list (coins) will be ordered by currency.
 	 * @param coins is a List of Coin objects we want to sort. 
 	 */
-	public static void sortByCurrency(List<Coin> coins) {
-		coins.sort(new CompareByCurrency());
+	public static void sortByCurrency(List<Valuable> valuable) {
+		Collections.sort(valuable, new CompareByCurrency());
 	}
 
 	/**
@@ -50,25 +50,27 @@ public class CoinUtil {
 	 * 
 	 * Hint: this is easy if you sort the coins by currency first. :-)
 	 */
-	public static void sumByCurrency(List<Coin> coins) {
-		sortByCurrency(coins);
+	public static void sumByCurrency(List<Valuable> valuable) {
+		/*sortByCurrency(valuable);
 		double sum = 0;
-		String currency = coins.get(0).getCurrency();
+		String currency = valuable.get(0).getCurrency();
 
-		for(Coin coin : coins){
-			if(coin.getCurrency().equals(currency)){
-				sum += coin.getValue();
+		for(Valuable v : valuable){
+			if(v.getCurrency().equals(currency)){
+				sum += v.getValue();
 			}
 			else{
 				System.out.print(sum + " " + currency + " ");
 				sum = 0;
-				sum += coin.getValue();
-				currency = coin.getCurrency();
+				sum += v.getValue();
+				currency = v.getCurrency();
 
 			}
 		}
 		System.out.print(sum + " " + currency + " ");
-
+		*/
+		
+		
 	}
 
 	/**
@@ -77,11 +79,11 @@ public class CoinUtil {
 	 */
 	public static void main(String[] args) {
 		String currency = "Rupee";
-		System.out.println("Filter coins by currency of "+currency);
-		List<Coin> coins = makeInternationalCoins();
+		System.out.println("Filter valuable by currency of "+currency);
+		List<Valuable> coins = makeInternationalValuable();
 		int size = coins.size();
 		System.out.print(" INPUT: "); printList(coins," ");
-		List<Coin> rupees = filterByCurrency(coins, currency);
+		List<Valuable> rupees = filterByCurrency(coins, currency);
 		System.out.print("RESULT: "); printList(rupees," ");
 		if (coins.size() != size) System.out.println("Error: you changed the original list.");
 
@@ -132,7 +134,7 @@ public class CoinUtil {
  * class for compare two coins by currency.
  */
 
-class CompareByCurrency implements Comparator<Coin>{
+class CompareByCurrency implements Comparator<Valuable>{
 
 	/**
 	 * compare two coins
@@ -143,7 +145,7 @@ class CompareByCurrency implements Comparator<Coin>{
 	 * 		   0 if arg0 and arg1 is equals.
 	 */
 	@Override
-	public int compare(Coin arg0, Coin arg1) {
+	public int compare(Valuable arg0, Valuable arg1) {
 
 		return arg0.getCurrency().compareTo(arg1.getCurrency());
 	}
