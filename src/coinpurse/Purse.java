@@ -3,38 +3,42 @@ package coinpurse;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 /**
- *  A coin purse contains coins.
- *  You can insert coins, withdraw money, check the balance,
+ *  A coin purse contains money.
+ *  You can insert money, withdraw money, check the balance,
  *  and check if the purse is full.
  *  When you withdraw money, the coin purse decides which
- *  coins to remove.
+ *  money to remove.
  *  
  *  @author Napong Dungduangsasitorn
  */
 public class Purse {
 
-	/** Collection of objects in the purse. */
-	private ArrayList<Coin> money = new ArrayList<Coin>();
-
-	/** Capacity is maximum number of coins the purse can hold.
+	/**
+	 *List of object in purse
+	 */
+	private List<Valuable> money;
+	
+	/** Capacity is maximum number of money the purse can hold.
 	 *  Capacity is set when the purse is created and cannot be changed.
 	 */
 	private final int capacity;
 
 	/** 
 	 *  Create a purse with a specified capacity.
-	 *  @param capacity is maximum number of coins you can put in purse.
+	 *  @param capacity is maximum number of money you can put in purse.
 	 */
 	public Purse( int capacity ) {
 		this.capacity = capacity;
+		this.money = new ArrayList<Valuable>(capacity);
 	}
 
 	/**
-	 * Count and return the number of coins in the purse.
-	 * This is the number of coins, not their value.
-	 * @return the number of coins in the purse
+	 * Count and return the number of money in the purse.
+	 * This is the number of money, not their value.
+	 * @return the number of money in the purse
 	 */
 	public int count() { 
 		return this.money.size(); 
@@ -73,18 +77,18 @@ public class Purse {
 	}
 
 	/** 
-	 * Insert a coin into the purse.
-	 * The coin is only inserted if the purse has space for it
-	 * and the coin has positive value.  No worthless coins!
-	 * @param coin is a Coin object to insert into purse
-	 * @return true if coin inserted, false if can't insert
+	 * Insert a value into the purse.
+	 * The value is only inserted if the purse has space for it
+	 * and the value has positive value.  No worthless money!
+	 * @param value is a Valuable object to insert into purse
+	 * @return true if value inserted, false if can't insert
 	 */
-	public boolean insert( Coin coin ) {
+	public boolean insert( Valuable value ) {
 		// if the purse is already full then can't insert anything.
-		if(!isFull() && coin.getValue() <= 0){
+		if(isFull() && value.getValue() <= 0){
 			return false;
 		}
-		money.add(coin);
+		money.add(value);
 		return true;
 	}
 
@@ -96,7 +100,7 @@ public class Purse {
 	 *  @return array of Coin objects for money withdrawn, 
 	 *    or null if cannot withdraw requested amount.
 	 */
-	public Coin[] withdraw( double amount ) {
+	public Valuable[] withdraw( double amount ) {
 
 		/*
 		 * See lab sheet for outline of a solution, 
@@ -110,34 +114,24 @@ public class Purse {
 			return null;
 		}
 
-		Collections.sort(money);
+		List<Valuable> temp = new ArrayList<Valuable>();
 		if( amount > 0){
-			ArrayList<Coin> temp1 = (ArrayList<Coin>) money.clone();
-			Collections.sort(temp1);
-			ArrayList<Coin> temp2 = new ArrayList<Coin>();
-			for(int i = temp1.size()-1 ; i >= 0 ; i--){
-				if(temp1.get(i).getValue() <= amount){
-					amount -= temp1.get(i).getValue();
-					temp2.add(temp1.get(i));
+			for(int i = money.size()-1 ; i >= 0 ; i--){
+				if(money.get(i).getValue() <= amount){
+					amount -= money.get(i).getValue();
+					temp.add(money.get(i));
 				}
 			}
-
-			if(amount != 0){
-				return null;
+		}
+		if(amount == 0){
+			for(Valuable value : temp){
+				
+				this.money.remove(value);
 			}
+			Valuable[] arrayMoney = new Valuable[temp.size()];
+			temp.toArray(arrayMoney);
 
-			for(int i = 0 ; i < temp2.size() ; i++){
-				for(int j = 0 ; j< money.size() ; j++){
-					if(temp2.get(i).equals(money.get(j))){
-						money.remove(j);
-						break;
-					}
-				}
-			}
-			Coin[] arrayCoin = new Coin[temp2.size()];
-			temp2.toArray(arrayCoin);
-
-			return arrayCoin;
+			return arrayMoney;
 		}
 
 		// Success.
