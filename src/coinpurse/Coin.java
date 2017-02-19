@@ -22,7 +22,7 @@ public class Coin implements Valuable{
     /**
      * A coin with given value and currency.
      * @param value is value of coin.
-     * @param currencyis cuurrency of coin.
+     * @param currencyis currency of coin.
      */
     public Coin( double value, String currency ) {
     	this.value = value;

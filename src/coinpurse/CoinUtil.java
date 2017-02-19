@@ -69,8 +69,18 @@ public class CoinUtil {
 		}
 		System.out.print(sum + " " + currency + " ");
 		*/
+		Map<String, Double> map = new HashMap<String, Double>();
+		for(Valuable value : valuable){
+			if (map.containsKey(value.getCurrency())) {
+				map.put(value.getCurrency(), map.get(value.getCurrency()) + value.getValue());
+			} else {
+				map.put(value.getCurrency(), value.getValue());
+			}
+		}
 		
-		
+		for(String string : map.keySet()){
+			System.out.println(map.get(string) + "-" + string);
+		}
 	}
 
 	/**
@@ -80,7 +90,7 @@ public class CoinUtil {
 	public static void main(String[] args) {
 		String currency = "Rupee";
 		System.out.println("Filter valuable by currency of "+currency);
-		List<Valuable> coins = makeInternationalValuable();
+		List<Valuable> coins = makeInternationalCoins();
 		int size = coins.size();
 		System.out.print(" INPUT: "); printList(coins," ");
 		List<Valuable> rupees = filterByCurrency(coins, currency);
@@ -101,8 +111,8 @@ public class CoinUtil {
 	}
 
 	/** Make a list of coins containing different currencies. */
-	public static List<Coin> makeInternationalCoins( ) {
-		List<Coin> money = new ArrayList<Coin>();
+	public static List<Valuable> makeInternationalCoins( ) {
+		List<Valuable> money = new ArrayList<Valuable>();
 		money.addAll( makeCoins("Baht", 0.25, 1.0, 2.0, 5.0, 10.0, 10.0) );
 		money.addAll( makeCoins("Ringgit", 2.0, 50.0, 1.0, 5.0) );
 		money.addAll( makeCoins("Rupee", 0.5, 0.5, 10.0, 1.0) );
