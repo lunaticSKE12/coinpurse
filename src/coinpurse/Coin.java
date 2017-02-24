@@ -3,20 +3,16 @@ package coinpurse;
  * a coin with a monetary value and currency
  * @author Napong Dungduangsasitorn
  */
-public class Coin implements Valuable{
+public class Coin extends AbstractValuable{
 	public static final String DEFAULT_CURRENCY = "Baht";
-    /** Value of the coin. */
-    private final double value;
-    /** The currency, of course. */
-    private final String currency;
+    
     
     /**
      * A coin with given value using the default currency.
      * @param value is value of coin.
      */
     public Coin( double value ) {
-    	this.value = value;
-        this.currency = DEFAULT_CURRENCY;
+    	super(value , DEFAULT_CURRENCY);
     }
     
     /**
@@ -25,46 +21,14 @@ public class Coin implements Valuable{
      * @param currencyis currency of coin.
      */
     public Coin( double value, String currency ) {
-    	this.value = value;
-        this.currency = currency;
+    	super(value, currency);
  
-    }
-
-    /**
-     * getVakue method return value of coin. 
-     * @return value of coin.
-     */
-    public double getValue( ) {
-    	return this.value;
-    } 
-    
-    /**
-     * getCurrency method return currency of coin.
-     * @return currency of coin.
-     */
-    public String getCurrency() {
-    	return this.currency;
-    }
-    
-    /**
-     * equals check equals of coin and other coin object.
-     * @param obj the object that use for check equals with coin.
-     * @return return true both coin object is equals.
-     */
-    public boolean equals(Object obj) {
-    	if(obj == null)
-    		return false;
-    	if(this.getClass() != obj.getClass())
-    		return false;
-    	Coin other = (Coin) obj;
-       	
-    	return this.getValue() == other.getValue() && this.getCurrency().equals(other.getCurrency());
     }
 
     /**
      * toString show info of coin.
      * @return string that show value and currency.
      */
-    public String toString() { return String.format(this.value + " " + this.currency); }
+    public String toString() { return String.format(this.getValue() + " " + this.getCurrency()); }
 
 }

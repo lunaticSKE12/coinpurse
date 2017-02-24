@@ -6,14 +6,12 @@ package coinpurse;
  * @author Napong Dungduangsasitorn
  *
  */
-public class BankNote implements Valuable{
+public class BankNote extends AbstractValuable{
 
-
+	public static final String DEFAULT_CURRENCY = "Baht";
+	
 	private static long nextSerialNumber = 1000000;
-	//value of banknote
-	private double value;
-	//currency of banknote
-	private String currency;
+	
 	//serial number of banknote.
 	private long serialNumber;
 
@@ -22,7 +20,7 @@ public class BankNote implements Valuable{
 	 * @param value is value of banknote.
 	 */
 	BankNote( double value ){
-		this.value = value;
+		super(value, DEFAULT_CURRENCY);
 		this.serialNumber = nextSerialNumber++;
 
 	}
@@ -33,28 +31,9 @@ public class BankNote implements Valuable{
 	 * @param currencyis currency of banknote.
 	 */
 	BankNote( double value , String currency){
-		this.value = value;
-		this.currency = currency;
+		super(value, currency);
 		this.serialNumber = nextSerialNumber++;
 
-	}
-
-	/**
-	 * getVakue method return value of banknote. 
-	 * @return value of banknote.
-	 */
-	@Override
-	public double getValue() {
-		return this.value;
-	}
-
-	/**
-	 * getCurrency method return currency of banknote.
-	 * @return currency of banknote.
-	 */
-	@Override
-	public String getCurrency() {
-		return this.currency;
 	}
 
 	/**
@@ -66,29 +45,11 @@ public class BankNote implements Valuable{
 	}
 
 	/**
-     * equals check equals of banknote and other banknote object.
-     * @param obj the object that use for check equals with banknote.
-     * @return return true both banknote object is equals.
-     */
-	public boolean equals(Object obj){
-		if(obj == null){
-			return false;
-		}
-		if(obj.getClass() != this.getClass()){
-			return false;
-		}
-		BankNote other = (BankNote) obj;
-
-		return this.getValue() == other.getValue() && this.getCurrency().equals(other.getCurrency());
-
-	}
-
-	/**
      * toString show info of banknote.
      * @return string that show value, currency and serial number.
 	 */
 	public String toString(){
-		return this.value + "-" + this.currency + " note [ " + this.serialNumber + " ]";
+		return this.getValue() + "-" + this.getCurrency() + " note [ " + this.serialNumber + " ]";
 	}
 
 }
