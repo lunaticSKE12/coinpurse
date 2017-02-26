@@ -4,7 +4,7 @@ package coinpurse;
  * @author Napong Dungduangsasitorn
  */
 public class Coin extends AbstractValuable{
-	public static final String DEFAULT_CURRENCY = "Baht";
+	
     
     
     /**
@@ -29,6 +29,8 @@ public class Coin extends AbstractValuable{
      * toString show info of coin.
      * @return string that show value and currency.
      */
-    public String toString() { return String.format(this.getValue() + " " + this.getCurrency()); }
+    public String toString() { return String.format(this.getValue() + " " + this.getCurrency()) + " coin"; }
+
+
 
 }

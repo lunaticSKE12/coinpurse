@@ -20,5 +20,13 @@ public class Main {
 		ConsoleDialog ui = new ConsoleDialog(purse);
 		// 3. run the ConsoleDialog
 		ui.run();
+		
+		/*MoneyFactory factory = MoneyFactory.getinstance();
+		Valuable m = factory.createMoney(5);
+		System.out.println(m.toString());
+		Valuable m2 = factory.createMoney(1);
+		System.out.println(m2.toString());
+		Valuable m3 = factory.createMoney(2);
+		System.out.println(m3.toString());*/
 	}
 }

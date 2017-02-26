@@ -8,8 +8,6 @@ package coinpurse;
  */
 public class BankNote extends AbstractValuable{
 
-	public static final String DEFAULT_CURRENCY = "Baht";
-	
 	private static long nextSerialNumber = 1000000;
 	
 	//serial number of banknote.
@@ -49,7 +47,9 @@ public class BankNote extends AbstractValuable{
      * @return string that show value, currency and serial number.
 	 */
 	public String toString(){
-		return this.getValue() + "-" + this.getCurrency() + " note [ " + this.serialNumber + " ]";
+		return this.getValue() + " " + this.getCurrency() + " note [ " + this.serialNumber + " ]";
 	}
+
+	
 
 }

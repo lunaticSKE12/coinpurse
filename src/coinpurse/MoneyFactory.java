@@ -6,18 +6,27 @@ abstract public class MoneyFactory {
 	
 	public static MoneyFactory getinstance(){
 		if(factory == null){
-			factory = new MoneyFactory();
+			factory = new ThaiMoneyFactory();
 		}
 		return factory;
 		
 	}
 	
-	public abstract Valuable createMoney(double value){
-		
+	public Valuable createMoney(double value){
+		try{
+			return createMoney(value);
+		} catch (NumberFormatException e){
+			throw new IllegalArgumentException();
+		}
 	}
 	
-	public Valuable createMoney(String value){
-		
+	public static Valuable createMoney(String value){
+		double price = Double.parseDouble(value);
+		try{
+			return createMoney(value);
+		} catch (NumberFormatException e){
+			throw new IllegalArgumentException();
+		}
 	}
 
 }

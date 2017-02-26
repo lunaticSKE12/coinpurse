@@ -54,21 +54,22 @@ public class ConsoleDialog {
         String inline = console.nextLine();
         // parse input line into numbers
         Scanner scanline = new Scanner(inline);
+        Valuable valuable;
         while( scanline.hasNextDouble() ) {
-            double value = scanline.nextDouble();
-            Valuable v;
-            if(value >= 20){
-            	v = new BankNote(value);
+        	String amount = scanline.next();
+            try{
+            	valuable = MoneyFactory.getinstance().createMoney(amount);
+            }catch (IllegalArgumentException ex){
+            	System.out.println("Sorry, " + amount + " is not a valid amount.");
+            	continue;
             }
-            else{
-            v = new Coin(value);
-            }
-            System.out.printf("Deposit %s... ", v.toString() );
-            boolean ok = purse.insert(v);
+            System.out.printf("Deposit %s... ", valuable.toString() );
+            boolean ok = purse.insert(valuable);
             System.out.println( (ok? "ok" : "FAILED") );
         }
         if ( scanline.hasNext() )
             System.out.println("Invalid input: "+scanline.next() );
+        
     }
     
     /** Ask how much money (Baht) to withdraw and then do it.
