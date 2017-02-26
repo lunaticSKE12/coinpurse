@@ -57,12 +57,12 @@ public class ConsoleDialog {
         Valuable valuable;
         while( scanline.hasNextDouble() ) {
         	String amount = scanline.next();
-            try{
-            	valuable = MoneyFactory.getinstance().createMoney(amount);
-            }catch (IllegalArgumentException ex){
-            	System.out.println("Sorry, " + amount + " is not a valid amount.");
-            	continue;
-            }
+            try {
+				valuable = MoneyFactory.getInstance().createMoney(amount);
+			} catch (IllegalAccessException e) {
+				System.out.println("Sorry, " + amount + " is not a valid amount.");
+				continue;
+			}
             System.out.printf("Deposit %s... ", valuable.toString() );
             boolean ok = purse.insert(valuable);
             System.out.println( (ok? "ok" : "FAILED") );

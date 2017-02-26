@@ -49,7 +49,4 @@ public class BankNote extends AbstractValuable{
 	public String toString(){
 		return this.getValue() + " " + this.getCurrency() + " note [ " + this.serialNumber + " ]";
 	}
-
-	
-
 }
