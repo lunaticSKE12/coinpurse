@@ -1,5 +1,8 @@
 package coinpurse;
 
+import coinpurse.gui.PurseObserver;
+import coinpurse.gui.StatusObserver;
+
 /**
  * A main class to create objects and connect objects together.
  * The user interface needs a reference to coin purse.
@@ -16,9 +19,15 @@ public class Main {
 	public static void main( String[] args ) {
 		// 1. create a Purse
 		Purse purse = new Purse(CAPACITY);
+		PurseObserver purseObserver = new PurseObserver();
+		StatusObserver statusObserver = new StatusObserver();
 		// 2. create a ConsoleDialog with a reference to the Purse object
+		purse.addObserver(purseObserver);
+		purse.addObserver(statusObserver);
 		ConsoleDialog ui = new ConsoleDialog(purse);
 		// 3. run the ConsoleDialog
+		purseObserver.run();
+		statusObserver.run();
 		ui.run();
 		
 		/*MoneyFactory factory = MoneyFactory.getinstance();

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Observable;
 
 /**
  *  A coin purse contains money.
@@ -14,7 +15,7 @@ import java.util.List;
  *  
  *  @author Napong Dungduangsasitorn
  */
-public class Purse {
+public class Purse extends Observable{
 
 	/**
 	 *List of object in purse
@@ -89,6 +90,8 @@ public class Purse {
 			return false;
 		}
 		money.add(value);
+		setChanged();
+		notifyObservers();
 		return true;
 	}
 
@@ -130,7 +133,8 @@ public class Purse {
 			}
 			Valuable[] arrayMoney = new Valuable[temp.size()];
 			temp.toArray(arrayMoney);
-
+			setChanged();
+			notifyObservers("withdraw" + amount);
 			return arrayMoney;
 		}
 
