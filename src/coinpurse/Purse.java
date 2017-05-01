@@ -6,6 +6,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Observable;
 
+import coinpurse.strategy.RecursiveWithdraw;
+import coinpurse.strategy.WithdrawStrategy;
+
 /**
  *  A coin purse contains money.
  *  You can insert money, withdraw money, check the balance,
@@ -21,11 +24,13 @@ public class Purse extends Observable{
 	 *List of object in purse
 	 */
 	private List<Valuable> money;
-	
+
 	/** Capacity is maximum number of money the purse can hold.
 	 *  Capacity is set when the purse is created and cannot be changed.
 	 */
 	private final int capacity;
+
+	private WithdrawStrategy strategy;
 
 	/** 
 	 *  Create a purse with a specified capacity.
@@ -34,6 +39,7 @@ public class Purse extends Observable{
 	public Purse( int capacity ) {
 		this.capacity = capacity;
 		this.money = new ArrayList<Valuable>(capacity);
+		setWithdrawStrategy(new RecursiveWithdraw());
 	}
 
 	/**
@@ -112,7 +118,7 @@ public class Purse extends Observable{
 
 		// Did we get the full amount?
 		// This code assumes you decrease amount each time you remove a coin.
-		if ( amount <= 0 )
+		/*if ( amount <= 0 )
 		{	// failed. Don't change the contents of the purse.
 			return null;
 		}
@@ -128,7 +134,7 @@ public class Purse extends Observable{
 		}
 		if(amount == 0){
 			for(Valuable value : temp){
-				
+
 				this.money.remove(value);
 			}
 			Valuable[] arrayMoney = new Valuable[temp.size()];
@@ -143,9 +149,30 @@ public class Purse extends Observable{
 		// and return them as an array.
 		// Use list.toArray( array[] ) to copy a list into an array.
 		// toArray returns a reference to the array itself.
-		return null; 
+		return null; */
+
+		List<Valuable> list = this.strategy.withdraw(amount, money);
+		if(list != null){
+			for(Valuable v : list){
+				money.remove(v);
+			}
+			Valuable[] valuable = new Valuable[list.size()];
+			list.toArray(valuable);
+			setChanged();
+			notifyObservers("Withdraw");
+			return valuable;
+		}
+		return null;
 	}
 
+	/**
+	 * setWithdrawStrategy is set strategy to withdraw money. 
+	 * @param strategy is type of strategy that want to set.
+	 */
+	public void setWithdrawStrategy(WithdrawStrategy strategy){
+		this.strategy = strategy;
+	}
+	
 	/** 
 	 * toString returns a string description of the purse contents.
 	 * It can return whatever is a useful description.
