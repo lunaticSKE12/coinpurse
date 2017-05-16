@@ -5,7 +5,7 @@ package coinpurse;
  */
 public class Coin extends AbstractValuable{
 	
-    
+	 public static final String DEFAULT_CURRENCY = "Baht";
     
     /**
      * A coin with given value using the default currency.

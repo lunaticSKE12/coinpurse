@@ -1,5 +1,8 @@
 package coinpurse;
 
+import java.util.Arrays;
+import java.util.List;
+
 import coinpurse.gui.PurseObserver;
 import coinpurse.gui.StatusObserver;
 import coinpurse.strategy.RecursiveWithdraw;
@@ -31,6 +34,8 @@ public class Main {
 		purseObserver.run();
 		statusObserver.run();
 		ui.run();
+		
+		
 		
 		/*MoneyFactory factory = MoneyFactory.getinstance();
 		Valuable m = factory.createMoney(5);

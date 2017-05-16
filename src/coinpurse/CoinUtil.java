@@ -18,23 +18,45 @@ public class CoinUtil {
 	 * @return a new List containing only the elements from valuablelist
 	 *     that have the requested currency.  
 	 */
-	public static List<Valuable> filterByCurrency(final List<Valuable> valuablelist, String currency) {
-		List<Valuable> valuableList = new ArrayList<Valuable>();
+	public static<E extends Valuable> List<E> filterByCurrency(final List<E> valuablelist, String currency) {
+		/*List<Valuable> valuableList = new ArrayList<Valuable>();
 		for(Valuable value : valuablelist){
 			if(value.getCurrency().equals(currency)){
 				valuableList.add(value);
 			}
 		}
-		return valuableList; // return a list of value references copied from valuablelist.
+		return valuableList; // return a list of value references copied from valuablelist.*/
+		
+		List<E> list = new ArrayList();
+		if(valuablelist == null || currency == null){
+			throw new IllegalArgumentException();
+		}
+		valuablelist.stream().filter((c) -> c.getCurrency().equals(currency)).forEach(list :: add);
+		return list;
+		
 	}
-
+	
+	@SafeVarargs
+	public static <E extends Comparable<? super E>> E max (E... items) {
+		if (items.length <= 0) {
+			return null;
+		}
+		
+		E max = items[0]; 
+		for (E item : items) {
+			if (item.compareTo(max) > 0) {
+				max = item;
+			}
+		}
+		return max;
+	}
 
 	/**
 	 * Method to sort a list of coins by currency.
 	 * On return, the list (coins) will be ordered by currency.
 	 * @param coins is a List of Coin objects we want to sort. 
 	 */
-	public static void sortByCurrency(List<Valuable> valuable) {
+	public static void sortByCurrency(List<? extends Valuable> valuable) {
 		Collections.sort(valuable, new CompareByCurrency());
 	}
 
@@ -105,10 +127,21 @@ public class CoinUtil {
 
 		System.out.println("\nSum coins by currency");
 		coins = makeInternationalCoins();
-		System.out.print("coins= "); printList(coins," ");
+		System.out.print("coins= "); 
+		printList(coins," ");
 		sumByCurrency(coins);
+		
+		Coin coin1 = new Coin(5);
+		Coin coin2 = new Coin(5);
+		BankNote note = new BankNote(20);
+		Valuable max = CoinUtil.max(coin1,coin2,note);
+		System.out.println(max + "eiei");
+		List<Coin> coinss = Arrays.asList(new Coin(10,"Baht"),new Coin(5,"Baht"),new Coin(100,"Kip"));
+		List<?> liste = filterByCurrency(coinss,"Kip");
+		System.out.println(liste.toString());
 
 	}
+
 
 	/** Make a list of coins containing different currencies. */
 	public static List<Valuable> makeInternationalCoins( ) {
@@ -122,8 +155,8 @@ public class CoinUtil {
 	}
 
 	/** Make a list of coins using given values. */ 
-	public static List<Coin> makeCoins(String currency, double ... values) {
-		List<Coin> list = new ArrayList<Coin>();
+	public static List<Valuable> makeCoins(String currency, double ... values) {
+		List<Valuable> list = new ArrayList<Valuable>();
 		for(double value : values) list.add(new Coin(value,currency));
 		return list;
 	}
@@ -159,5 +192,7 @@ class CompareByCurrency implements Comparator<Valuable>{
 
 		return arg0.getCurrency().compareTo(arg1.getCurrency());
 	}
+	
+	
 
 }
